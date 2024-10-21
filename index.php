@@ -30,7 +30,7 @@
         $servername = "localhost";
         $username = "root";
         $password = "password";
-        $dbname = "clientes";
+        $dbname = "webasir";
 
         $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -40,7 +40,7 @@
         }
 
         // Consultar los datos
-        $sql = "SELECT * FROM Clientes";
+        $sql = "SELECT * FROM clientes";
         $result = $conn->query($sql);
     ?>
 
