@@ -27,9 +27,10 @@
 
     <?php
         // Conectar a la base de datos
-        $servername = "localhost";
+        // Cambiar el servername por el que proceda: localhost, mysql (docker), dirección IP, cadena de Azure Mysql
+        $servername = "mysql";
         $username = "asirweb";
-        $password = "password";
+        $password = "qwe_123";
         $dbname = "webasir";
 
         $conn = new mysqli($servername, $username, $password, $dbname);
