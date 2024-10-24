@@ -72,3 +72,9 @@ Las credenciales por defecto para la conexión son:
 | asirweb | qwe_123 | webasir |
 
 También se pueden cambiar estas credenciales en el fichero `.env`
+
+Para acceder a MySQL desde la línea de comandos:
+
+```zsh
+mysql -h 127.0.0.1 -u asirweb -p
+```
