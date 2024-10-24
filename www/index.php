@@ -28,7 +28,7 @@
     <?php
         // Conectar a la base de datos
         $servername = "localhost";
-        $username = "root";
+        $username = "asirweb";
         $password = "password";
         $dbname = "webasir";
 
