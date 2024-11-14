@@ -36,6 +36,8 @@ mysql -h 127.0.0.1 -u asirweb -p < asir.sql
 ```
 Puedes verificar el funcionamiento accediendo a: [http://localhost/](http://localhost/)
 
+> Si no tienes instalado `mysql`
+ en tu máquina puedes acceder al shell del contenedor con el comando `docker exec -it <CONTAINER_ID> sh`. Puedes obtener el ID del contenedot con `docker ps -a`.
 
 ## Comandos disponibles
 
