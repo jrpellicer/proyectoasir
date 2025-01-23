@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="es">
     <head>
-        <title>Proyecto Intermodular</title>
+        <title>Auto Camp</title>
         <meta charset="utf-8" />
         <meta
             name="viewport"
@@ -18,19 +18,19 @@
     </head>
 
     <body>
-    
+
         <!-- DATABASE CONFIG -->
         <?php
-			$servername = "mysql";
-			$username = "asirweb";
-			$password = "qwe_123";
-			$dbname = "webasir";
+            $servername = "mysql";
+            $username = "asirweb";
+            $password = "qwe_123";
+            $dbname = "webasir";
 
-			$conn = new mysqli($servername, $username, $password, $dbname);
-			if ($conn->connect_error)
-			{
-				die("Conexión fallida: " . $conn->connect_error);
-			}
+            $conn = new mysqli($servername, $username, $password, $dbname);
+            if ($conn->connect_error)
+            {
+                die("Conexión fallida: " . $conn->connect_error);
+            }
         ?>
     
         <header>
@@ -39,7 +39,7 @@
                 <div class="container">
                     <a class="navbar-brand" href="#">
                         <img src="assets/images/frog_square_32x32.png" height="32px" alt="frog" >
-                        Proyecto Intermodular
+                        Autocamp
                     </a>
                     <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -48,10 +48,10 @@
                     <div class="collapse navbar-collapse" id="collapsibleNavId">
                         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                             <li class="nav-item active">
-                                <a class="nav-link" href="#">Presencial <span class="sr-only">(current)</span></a>
+                                <a class="nav-link" href="#">Coches <span class="sr-only">(current)</span></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Semipresencial</a>
+                                <a class="nav-link" href="#">Ofertas especiales</a>
                             </li>
                             <!-- <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
@@ -62,8 +62,8 @@
                             </li> -->
                         </ul>
                         <form class="form-inline my-2 my-lg-0">
-                            <input class="form-control mr-sm-2" type="text" placeholder="Search">
-                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                            <input class="form-control mr-sm-2" type="text" placeholder="Renault Clio">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
                         </form>
                     </div>
                 </div>
@@ -77,15 +77,15 @@
 
             <div class="container">
                 <nav class="breadcrumb">
-                    <a class="breadcrumb-item" href="#">Formación profesional</a>
-                    <a class="breadcrumb-item" href="#">Prácticas en empresa</a>
-                    <span class="breadcrumb-item active">Empresas</span>
+                    <a class="breadcrumb-item" href="#">Alquiler</a>
+                    <a class="breadcrumb-item" href="#">Vehículos</a>
+                    <span class="breadcrumb-item active">Coches</span>
                 </nav>
             </div>
 
 
             <div class="container">
-                <h1>Empresas para prácticas</h1>
+                <h1>Coches disponibles</h1>
                 
                 <hr>
 
@@ -97,18 +97,16 @@
                     >
                         <thead>
                             <tr>
-                                <th>Razón social</th>
-                                <th>Descripción</th>
-                                <th>Email</th>
-                                <th>Teléfono</th>
-                                <th></th>
+                                <th>Matrícula</th>
+                                <th>Marca</th>
+                                <th>Modelo</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
 
                             <?php
-                            
-                                $sql = "SELECT * FROM clientes";
+                                $sql = "SELECT * FROM cars";
                                 $result = $conn->query($sql);
                                 
 								if ($result->num_rows > 0)
@@ -116,14 +114,13 @@
 									while ( $row = $result->fetch_assoc() )
 									{
 										echo "  <tr>
-													<td>{$row['razon_social']}</td>
-													<td>{$row['descripcion']}</td>
-													<td>{$row['email']}</td>
-													<td>{$row['telefono']}</td>
+													<td>#{$row['license_plate']}</td>
+													<td>{$row['brand']}</td>
+													<td>{$row['model']}</td>
 													<td>
 														<div class='btn-group'>
-															<a class='btn btn-outline-success btn-sm'><i class='bi bi-telephone-fill'></i> Llamar</a>
-															<a class='btn btn-outline-primary btn-sm'><i class='bi bi-envelope-fill'></i> Correo</a>
+															<a href='car_detail.php?license_plate={$row['license_plate']}&brand={$row['brand']}&model={$row['model']}' class='btn btn-outline-success btn-md'><i class='bi bi-eye'></i> Detalles</a>
+															<a href='#' class='btn btn-outline-primary btn-md'><i class='bi bi-pen'></i> Editar</a>
 														</div>
 													</td>
 												</tr>";
@@ -134,6 +131,16 @@
 									echo "<tr><td class='danger' colspan='5'>No hay datos disponibles</td></tr>";
 								}
                             ?>
+
+                            <tr>
+                                <td>1254GPL</td>
+                                <th>Renault</td>
+                                <td>Clio</td>
+                                <td>
+                                    <a href="car_detail.html" class="btn btn-primary">Detalles</a>
+                                </td>
+                            </tr>
+
                         </tbody>
                     </table>
                 </div>
