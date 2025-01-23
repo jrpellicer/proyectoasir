@@ -131,6 +131,16 @@
 									echo "<tr><td class='danger' colspan='5'>No hay datos disponibles</td></tr>";
 								}
                             ?>
+
+                            <tr>
+                                <td>1254GPL</td>
+                                <th>Renault</td>
+                                <td>Clio</td>
+                                <td>
+                                    <a href="car_detail.html" class="btn btn-primary">Detalles</a>
+                                </td>
+                            </tr>
+
                         </tbody>
                     </table>
                 </div>
