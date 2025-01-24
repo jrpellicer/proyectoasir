@@ -34,18 +34,11 @@
 					<div class="collapse navbar-collapse" id="collapsibleNavId">
 						<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 							<li class="nav-item active">
-								<a class="nav-link" href="#">Coches <span class="sr-only">(current)</span></a>
+								<a class="nav-link" href="index.php">Coches <span class="sr-only">(current)</span></a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link" href="#">Ofertas especiales</a>
 							</li>
-							<!-- <li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-								<div class="dropdown-menu" aria-labelledby="dropdownId">
-									<a class="dropdown-item" href="#">Action 1</a>
-									<a class="dropdown-item" href="#">Action 2</a>
-								</div>
-							</li> -->
 						</ul>
 						<form class="form-inline my-2 my-lg-0">
 							<input class="form-control mr-sm-2" type="text" placeholder="Renault Clio">
@@ -59,6 +52,26 @@
 
 		<main>
 
+			<?php
+				include 'database_connect.php';
+				
+				$license_plate = $_GET['license_plate'];
+
+				
+				$sql = "SELECT * FROM cars where license_plate='{$license_plate}'";
+				$result = $conn->query($sql);
+				
+				if($result->num_rows == 0)
+				{
+					echo "<div class='container'><br><p>Coche no encontrado. <a href='index.php'>Volver al listado de coches</a></p></div>";
+					die();
+				}
+
+				$car = $result->fetch_assoc();
+
+				include 'database_dispose.php';
+			?>
+
 			<br>
 
 			<div class="container">
@@ -68,7 +81,7 @@
 					<a class="breadcrumb-item" href="index.php">Coches</a>
 					<span class="breadcrumb-item active">
 						<?php
-							echo $_GET["license_plate"];
+							echo $car['license_plate'];
 						?>
 					</span>
 				</nav>
@@ -76,19 +89,11 @@
 
 
 			<div class="container">
-				<div class="row">
-					<div class="col-10">
-						<h1>
-							<?php
-								echo $_GET["brand"] . " " . $_GET["model"];
-							?>
-						</h1>
-					</div>
-					<div class="col-2">
-						<a href="index.php" class="btn btn-primary">Volver</a>
-					</div>
-
-				</div>
+				<h1>
+					<?php
+						echo $car['brand'] . " " . $car['model']
+					?>
+				</h1>
 
 				<hr>
 
@@ -102,7 +107,7 @@
 							<div class="form-group">
 								<label for="matricula">Matrícula</label>
 								<?php
-									echo "<input type='text' class='form-control' id='matricula' placeholder='{$_GET['license_plate']}' disabled>";
+									echo "<input type='text' class='form-control' id='matricula' value='{$car['license_plate']}' disabled>";
 								?>
 							</div>
 						
@@ -110,13 +115,13 @@
 								<div class="form-group col-4">
 									<label for="marca">Marca</label>
 									<?php
-										echo "<input type='text' class='form-control' id='marca' placeholder='{$_GET['brand']}' disabled>";
+										echo "<input type='text' class='form-control' id='marca' value='{$car['brand']}' disabled>";
 									?>
 								</div>
 								<div class="form-group col-8">
 									<label for="modelo">Modelo</label>
 									<?php
-										echo "<input type='text' class='form-control' placeholder='{$_GET['model']}' id='modelo' disabled>";
+										echo "<input type='text' class='form-control' value='{$car['model']}' id='modelo' disabled>";
 									?>
 								</div>
 							</div>
@@ -126,15 +131,22 @@
 							<div class="row">
 								<div class="form-group col-4">
 									<label for="fecha">Fecha de fabricación</label>
-									<input type="text" class="form-control" id="fecha" disabled>
+									<?php
+										echo "<input type='text' class='form-control' id='fecha' value='{$car['manufacture_date']}' disabled>";
+									?>
 								</div>
 								<div class="form-group col-4">
 									<label for="kilometraje">Kilometraje</label>
-									<input type="text" class="form-control" id="kilometraje" disabled>
+									
+									<?php
+										echo "<input type='text' class='form-control' id='kilometraje' value='{$car['mileage']} km' disabled>";
+									?>
 								</div>
 								<div class="form-group col-4">
 									<label for="color">Color</label>
-									<input type="color" class="form-control" id="color" disabled>
+									<?php
+										echo "<input type='color' class='form-control' id='color' value='{$car['color']}' disabled>";
+									?>
 								</div>
 							</div>
 
@@ -176,10 +188,45 @@
 					</div>
 					<button type="submit" class="btn btn-primary">Sign in</button> -->
 				</form>
-				
+
+
+				<div>
+					<a href="index.php" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Volver</a>
+					<button type="button" class="btn btn-success" data-toggle="modal" data-target="#staticBackdrop"><i class="bi bi-cash-stack"></i> Alquilar</button>
+				</div>
+
+				<br>
+			
 			</div>
 
 		</main>
+
+		<!-- MODALS -->
+
+		<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticBackdropLabel">
+						<?php
+							echo "Has reservado un " . $car['brand'] . " " . $car['model'];
+						?>
+					</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					Gracias por su confianza, haremos el cobro en las oficinas el día de la recogida del vehículo.
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+					<button type="button" class="btn btn-success" data-dismiss="modal">Genial!</button>
+				</div>
+				</div>
+			</div>
+		</div>
+
 
 		<footer>
 
